@@ -1,3 +1,5 @@
+添加utf-8支持,中文不再乱码
+
 This is a fork of the Go archive/zip package to add support
 for reading/writing password protected .zip files.
 Only supports Winzip's AES extension: http://www.winzip.com/aes_info.htm.
