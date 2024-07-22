@@ -137,14 +137,11 @@ func isInclude(includes []string, fname string) bool {
 }
 
 // DeCompressZip 解压zip包
-func DeCompressZip(zipFile, passwd string) (error, []*zip.File) {
-	uz := &unzip{offset: 0, name: zipFile}
-
-	zr, err := zip.NewReader(uz, uz.Size())
+func DeCompressZip(zipFile []byte, passwd string) (error, []*zip.File) {
+	zr, err := zip.NewReader(bytes.NewReader(zipFile), int64(len(zipFile)))
 	if err != nil {
 		return err, nil
 	}
-
 	if passwd != "" {
 		// Register a custom Deflate compressor.
 		zr.RegisterDecompressor(zip.Deflate, func(r io.Reader) io.ReadCloser {
@@ -161,3 +158,4 @@ func DeCompressZip(zipFile, passwd string) (error, []*zip.File) {
 	}
 	return nil, zr.File
 }
+
